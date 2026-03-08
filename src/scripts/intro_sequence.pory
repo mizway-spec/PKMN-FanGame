@@ -1,0 +1,287 @@
+/*
+ * Pokemon Champions: Emerald Edition
+ * Intro Sequence Scripts — Poryscript format
+ *
+ * Covers:
+ *   - Title screen / opening cutscene
+ *   - Professor Opal's introduction
+ *   - Player receives invitation letter
+ *   - Departure to Nexum Archipelago
+ */
+
+# =========================================================
+# SCRIPT: OpeningCutscene
+# Plays after title screen, before player creation
+# =========================================================
+script OpeningCutscene {
+    lockall
+    setvar VAR_GAME_CHAPTER, 0
+
+    # Fade in on a dark sky over an ocean
+    fadescreen FADE_FROM_BLACK
+
+    # Narrator text panels
+    msgbox NarratorText_ChampionsExist, MSGBOX_DEFAULT
+    msgbox NarratorText_Nexum,          MSGBOX_DEFAULT
+    msgbox NarratorText_Tournament,     MSGBOX_DEFAULT
+    msgbox NarratorText_Invitation,     MSGBOX_DEFAULT
+
+    # Transition to player-creation room
+    warp MAP_PLAYER_BEDROOM, 4, 4
+    releaseall
+}
+
+text NarratorText_ChampionsExist {
+    format("In every region, there exists\l"
+           "a single trainer who stands\l"
+           "above all others.\p"
+           "They are called Champions.$")
+}
+
+text NarratorText_Nexum {
+    format("But between regions lies\l"
+           "a place no Champion\l"
+           "has ever conquered…\p"
+           "The Nexum Archipelago.$")
+}
+
+text NarratorText_Tournament {
+    format("Once every ten years,\l"
+           "a tournament is held there.\l"
+           "Champions from across the\l"
+           "world gather to compete.$")
+}
+
+text NarratorText_Invitation {
+    format("No one has ever won.\p"
+           "This year, for the first time,\l"
+           "a mysterious Wild Card\l"
+           "invitation has been sent…$")
+}
+
+
+# =========================================================
+# SCRIPT: PlayerBedroom_OnLoad
+# Player wakes up to find a golden envelope on their desk
+# =========================================================
+script PlayerBedroom_OnLoad {
+    lock
+    faceplayer
+    compare VAR_INVITATION_READ, 1
+    if EQ, goto PlayerBedroom_AlreadyRead
+    msgbox Text_MomCallsUpstairs, MSGBOX_DEFAULT
+    setvar VAR_INVITATION_READ, 1
+    end
+
+    PlayerBedroom_AlreadyRead:
+    msgbox Text_BetterGetDownstairs, MSGBOX_SIGN
+    release
+    end
+}
+
+script InvitationDesk_Interact {
+    lock
+    compare VAR_INVITATION_OPENED, 1
+    if EQ, goto InvitationDesk_AlreadyOpened
+    playmoncry SPECIES_SOVERION, 0
+    delay 60
+    msgbox Text_GoldenEnvelope,     MSGBOX_DEFAULT
+    msgbox Text_InvitationText,     MSGBOX_DEFAULT
+    msgbox Text_PlayerReaction,     MSGBOX_DEFAULT
+    setvar VAR_INVITATION_OPENED, 1
+    # Trigger Mom arriving upstairs
+    applymovement OBJ_MOM, MomMovement_ComesUpstairs
+    waitmovement OBJ_MOM
+    msgbox Text_MomSeesinvitation,  MSGBOX_DEFAULT
+    msgbox Text_MomEncourages,      MSGBOX_DEFAULT
+    msgbox Text_ProfOpalsVoice,     MSGBOX_DEFAULT
+    # Prof Opal calls via video — TV flickers
+    playse SE_TV_FLICKER
+    msgbox Text_ProfOpalIntro,      MSGBOX_DEFAULT
+    msgbox Text_ProfOpalExplains,   MSGBOX_DEFAULT
+    msgbox Text_ProfOpalGivesTask,  MSGBOX_DEFAULT
+    setvar VAR_STORY_STAGE, STAGE_RECEIVED_INVITATION
+    end
+
+    InvitationDesk_AlreadyOpened:
+    msgbox Text_InvitationReminder, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_GoldenEnvelope {
+    format("A golden envelope rests\l"
+           "on your desk.\p"
+           "It's sealed with a crest\l"
+           "you've never seen before.\p"
+           "{PLAYER} opened the envelope…$")
+}
+
+text Text_InvitationText {
+    format("  «WILD CARD INVITATION»\p"
+           "  Trainer: {PLAYER}\l"
+           "  Event: World Champions\l"
+           "          Tournament\p"
+           "  Venue: Nexum Archipelago\l"
+           "  Entry: OPEN — No qualifier\p"
+           "    Sincerely,\l"
+           "    The Grand Tournament\l"
+           "    Committee$")
+}
+
+text Text_PlayerReaction {
+    format("…\p"
+           "The Grand Tournament?\p"
+           "Champions from everywhere\l"
+           "in the world?\p"
+           "How do they even know\l"
+           "who you are?$")
+}
+
+text Text_MomSeesinvitation {
+    format("MOM: Oh my goodness!\l"
+           "A Wild Card invitation!\p"
+           "I knew you were special,\l"
+           "{PLAYER}!\p"
+           "I'm so proud of you!$")
+}
+
+text Text_MomEncourages {
+    format("MOM: Go on, you should\l"
+           "meet with Professor Opal.\l"
+           "She's been expecting this.$")
+}
+
+text Text_ProfOpalsVoice {
+    format("Suddenly, the TV flickers\l"
+           "on by itself…$")
+}
+
+text Text_ProfOpalIntro {
+    format("PROF. OPAL: Ah, {PLAYER}!\l"
+           "You found the invitation.\p"
+           "I've been watching your\l"
+           "progress for some time now.$")
+}
+
+text Text_ProfOpalExplains {
+    format("PROF. OPAL: The Nexum\l"
+           "Tournament is no ordinary\l"
+           "competition.\p"
+           "Champions from Kanto,\l"
+           "Johto, Hoenn… all nine\l"
+           "regions will be there.\p"
+           "And something far older\l"
+           "stirs beneath those islands.$")
+}
+
+text Text_ProfOpalGivesTask {
+    format("PROF. OPAL: Meet me at\l"
+           "Nexum Harbor. I'll explain\l"
+           "everything.\p"
+           "And {PLAYER}?\l"
+           "Bring your best team.$")
+}
+
+text Text_BetterGetDownstairs {
+    format("The invitation sits on\l"
+           "your desk. You should\l"
+           "head to Nexum Harbor.$")
+}
+
+text Text_InvitationReminder {
+    format("The Wild Card invitation.\l"
+           "Your ticket to the World\l"
+           "Champions Tournament.$")
+}
+
+text Text_MomCallsUpstairs {
+    format("MOM (from downstairs):\l"
+           "{PLAYER}! There's something\l"
+           "on your desk!\p"
+           "It looks important!$")
+}
+
+text Text_BetterGetDownstairs {
+    format("You should check your desk.$")
+}
+
+
+# =========================================================
+# SCRIPT: NexumHarbor_ProfOpal
+# First meeting with Prof. Opal at the docks
+# =========================================================
+script NexumHarbor_ProfOpal {
+    lock
+    compare VAR_STORY_STAGE, STAGE_MET_OPAL
+    if GE, goto NexumHarbor_OpalAlreadyMet
+    faceplayer
+    msgbox Text_OpalGreeting,   MSGBOX_DEFAULT
+    msgbox Text_OpalBackstory,  MSGBOX_DEFAULT
+    msgbox Text_OpalWarning,    MSGBOX_DEFAULT
+    msgbox Text_OpalGivesKit,   MSGBOX_DEFAULT
+    giveitem ITEM_NEXUM_POKEDEX
+    giveitem ITEM_POKE_BALL, 5
+    msgbox Text_OpalDeparts,    MSGBOX_DEFAULT
+    setvar VAR_STORY_STAGE, STAGE_MET_OPAL
+    end
+
+    NexumHarbor_OpalAlreadyMet:
+    msgbox Text_OpalReminder,   MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_OpalGreeting {
+    format("PROF. OPAL: {PLAYER}!\l"
+           "You made it. Good.\p"
+           "The boat to Nexum leaves\l"
+           "in an hour. We don't have\l"
+           "much time.$")
+}
+
+text Text_OpalBackstory {
+    format("PROF. OPAL: Nexum was\l"
+           "once a single continent.\l"
+           "An ancient war split it\l"
+           "into nine islands.\p"
+           "At the center of that war:\l"
+           "a Pokemon called Soverion.\l"
+           "The Eternal Sovereign.$")
+}
+
+text Text_OpalWarning {
+    format("PROF. OPAL: I believe\l"
+           "this tournament is a trap.\p"
+           "Someone wants to harvest\l"
+           "the energy from champion-\l"
+           "level battles.\p"
+           "Enough energy to bring\l"
+           "Soverion back.$")
+}
+
+text Text_OpalGivesKit {
+    format("PROF. OPAL: Take this\l"
+           "Nexum Pokédex. It registers\l"
+           "all known species, plus\l"
+           "the Nexum Forms.\p"
+           "And these Poké Balls.\l"
+           "You'll need them.$")
+}
+
+text Text_OpalDeparts {
+    format("PROF. OPAL: I'll be\l"
+           "watching from the research\l"
+           "vessel offshore.\p"
+           "Win your matches, {PLAYER}.\l"
+           "But trust no one on the\l"
+           "committee.$")
+}
+
+text Text_OpalReminder {
+    format("PROF. OPAL (on radio):\l"
+           "Remember — the tournament\l"
+           "director cannot be trusted.\p"
+           "Win your battles and\l"
+           "keep your eyes open.$")
+}

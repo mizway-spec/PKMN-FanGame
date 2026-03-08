@@ -1,0 +1,429 @@
+/*
+ * Pokemon Champions: Emerald Edition
+ * Champion Battle Scripts — Poryscript format
+ *
+ * Pre/post-battle dialogue for each Champion encounter.
+ * Each island's Champion has: pre-battle, lose, win, post text.
+ */
+
+# =========================================================
+# BLUE — Valor Isle Champion
+# =========================================================
+script Blue_PreBattle {
+    lock
+    faceplayer
+    compare VAR_BLUE_DEFEATED, 1
+    if EQ, goto Blue_Rematch
+    msgbox Text_Blue_PreBattle, MSGBOX_DEFAULT
+    trainerbattle TRAINER_CHAMPION_BLUE, Text_Blue_PreBattle, Text_Blue_Lose
+    msgbox Text_Blue_PostWin, MSGBOX_DEFAULT
+    setvar VAR_BLUE_DEFEATED, 1
+    giveitem ITEM_VALOR_MEDAL
+    setflag FLAG_VALOR_ISLE_CLEARED
+    end
+
+    Blue_Rematch:
+    msgbox Text_Blue_Rematch, MSGBOX_DEFAULT
+    trainerbattle TRAINER_CHAMPION_BLUE_2, Text_Blue_Rematch, Text_Blue_Lose
+    end
+}
+
+text Text_Blue_PreBattle {
+    format("BLUE: So you're the Wild\l"
+           "Card everyone's been\l"
+           "talking about.\p"
+           "I've beaten every Champion\l"
+           "here before. You won't\l"
+           "be any different.\p"
+           "Show me what you've got!$")
+}
+
+text Text_Blue_Lose {
+    format("BLUE: Heh. So you DO\l"
+           "have something.\p"
+           "Maybe I underestimated you.$")
+}
+
+text Text_Blue_PostWin {
+    format("BLUE: …Not bad.\p"
+           "You've got the spirit, I'll\l"
+           "give you that.\p"
+           "Take the Valor Medal.\l"
+           "You earned it.\p"
+           "But don't get comfortable.\l"
+           "The others won't be\l"
+           "as generous as me.$")
+}
+
+text Text_Blue_Rematch {
+    format("BLUE: Ready for another\l"
+           "round? I've been training.$")
+}
+
+
+# =========================================================
+# CYNTHIA — Frost Isle Champion
+# =========================================================
+script Cynthia_PreBattle {
+    lock
+    faceplayer
+    compare VAR_CYNTHIA_DEFEATED, 1
+    if EQ, goto Cynthia_Rematch
+    msgbox Text_Cynthia_PreBattle, MSGBOX_DEFAULT
+    trainerbattle TRAINER_CHAMPION_CYNTHIA, Text_Cynthia_PreBattle, Text_Cynthia_Lose
+    msgbox Text_Cynthia_PostWin, MSGBOX_DEFAULT
+    setvar VAR_CYNTHIA_DEFEATED, 1
+    giveitem ITEM_FROST_MEDAL
+    setflag FLAG_FROST_ISLE_CLEARED
+    # Cynthia gives a story clue after defeat
+    msgbox Text_Cynthia_Clue, MSGBOX_DEFAULT
+    end
+
+    Cynthia_Rematch:
+    msgbox Text_Cynthia_Rematch, MSGBOX_DEFAULT
+    trainerbattle TRAINER_CHAMPION_CYNTHIA_2, Text_Cynthia_Rematch, Text_Cynthia_Lose
+    end
+}
+
+text Text_Cynthia_PreBattle {
+    format("CYNTHIA: I've studied\l"
+           "the legends of Nexum\l"
+           "for years.\p"
+           "The Eternal Sovereign…\l"
+           "Soverion.\p"
+           "A Pokemon of such power\l"
+           "that even the Ancients\l"
+           "feared it.\p"
+           "If this tournament truly\l"
+           "plans to resurrect it…\p"
+           "But first — let's battle.\l"
+           "I need to see your strength\l"
+           "with my own eyes.$")
+}
+
+text Text_Cynthia_Lose {
+    format("CYNTHIA: Incredible.\l"
+           "You really did defeat me.$")
+}
+
+text Text_Cynthia_PostWin {
+    format("CYNTHIA: You're the real\l"
+           "thing, {PLAYER}.\p"
+           "Take the Frost Medal.\p"
+           "And listen carefully…$")
+}
+
+text Text_Cynthia_Clue {
+    format("CYNTHIA: The Tournament\l"
+           "Director, Vance Kael…\l"
+           "I've seen his research.\p"
+           "He's not organizing this\l"
+           "for sport. Each battle\l"
+           "feeds an ancient engine.\p"
+           "At the Grand Arena's core\l"
+           "lies a seal. If enough\l"
+           "championship energy fills\l"
+           "it… Soverion wakes.\p"
+           "Be careful, {PLAYER}.$")
+}
+
+text Text_Cynthia_Rematch {
+    format("CYNTHIA: I've been\l"
+           "refining my team since\l"
+           "our last battle. Ready?$")
+}
+
+
+# =========================================================
+# LEON — Crown Isle Champion
+# =========================================================
+script Leon_PreBattle {
+    lock
+    faceplayer
+    compare VAR_LEON_DEFEATED, 1
+    if EQ, goto Leon_Rematch
+    msgbox Text_Leon_PreBattle, MSGBOX_DEFAULT
+    trainerbattle TRAINER_CHAMPION_LEON, Text_Leon_PreBattle, Text_Leon_Lose
+    msgbox Text_Leon_PostWin, MSGBOX_DEFAULT
+    setvar VAR_LEON_DEFEATED, 1
+    giveitem ITEM_CROWN_MEDAL
+    setflag FLAG_CROWN_ISLE_CLEARED
+    end
+
+    Leon_Rematch:
+    msgbox Text_Leon_Rematch, MSGBOX_DEFAULT
+    trainerbattle TRAINER_CHAMPION_LEON_2, Text_Leon_Rematch, Text_Leon_Lose
+    end
+}
+
+text Text_Leon_PreBattle {
+    format("LEON: Blimey, {PLAYER}!\l"
+           "You've made it this far?\p"
+           "I'm honestly impressed.\l"
+           "Most Wild Cards tap out\l"
+           "at Cynthia.\p"
+           "But me? I'm UNDEFEATED!\l"
+           "And I plan to keep it\l"
+           "that way!\p"
+           "Let's have ourselves\l"
+           "a brilliant battle!$")
+}
+
+text Text_Leon_Lose {
+    format("LEON: I lost?!\p"
+           "I… actually lost.\p"
+           "Ha! Ha ha!\p"
+           "That was BRILLIANT,\l"
+           "{PLAYER}!$")
+}
+
+text Text_Leon_PostWin {
+    format("LEON: First time I've\l"
+           "ever lost. And to a\l"
+           "Wild Card, no less!\p"
+           "You know what? I respect\l"
+           "that. Genuinely.\p"
+           "Take the Crown Medal.\l"
+           "You're one match away\l"
+           "from the Grand Arena.\p"
+           "Whatever's waiting there…\l"
+           "I hope you're ready.$")
+}
+
+text Text_Leon_Rematch {
+    format("LEON: Ready to see if\l"
+           "my loss was a fluke?\l"
+           "Let's go, {PLAYER}!$")
+}
+
+
+# =========================================================
+# ETERNAL CHAMPION VANCE KAEL — Grand Arena (Final Boss)
+# =========================================================
+script EternalChampion_PreBattle {
+    lock
+    faceplayer
+    compare VAR_ETERNAL_DEFEATED, 1
+    if EQ, goto EternalChampion_Rematch
+    # Check all 9 champion medals
+    compare VAR_MEDALS_COUNT, 9
+    if LT, goto EternalChampion_NotReady
+    msgbox Text_Vance_Reveal,       MSGBOX_DEFAULT
+    msgbox Text_Vance_Conspiracy,   MSGBOX_DEFAULT
+    msgbox Text_Vance_Final,        MSGBOX_DEFAULT
+    # Dramatic music change
+    playse SE_THUNDER_STORM
+    playbgm MUS_ETERNAL_CHAMPION_BATTLE
+    trainerbattle TRAINER_ETERNAL_CHAMPION, Text_Vance_Final, Text_Vance_Lose
+    msgbox Text_Vance_PostWin,      MSGBOX_DEFAULT
+    setvar VAR_ETERNAL_DEFEATED, 1
+    # Trigger Soverion awakening cutscene
+    call Script_SoverionAwakens
+    end
+
+    EternalChampion_NotReady:
+    msgbox Text_Vance_NotReady, MSGBOX_SIGN
+    release
+    end
+
+    EternalChampion_Rematch:
+    msgbox Text_Vance_Rematch,  MSGBOX_DEFAULT
+    trainerbattle TRAINER_ETERNAL_CHAMPION_2, Text_Vance_Rematch, Text_Vance_Lose
+    end
+}
+
+text Text_Vance_Reveal {
+    format("VANCE KAEL: Impressive,\l"
+           "{PLAYER}.\p"
+           "Nine medals. Nine Champions\l"
+           "defeated. The seal is\l"
+           "nearly full.\p"
+           "You've done exactly what\l"
+           "I needed you to do.$")
+}
+
+text Text_Vance_Conspiracy {
+    format("VANCE KAEL: Did you think\l"
+           "this was a sport?\p"
+           "Every battle you fought\l"
+           "fed the Grand Seal.\l"
+           "Every champion you bested\l"
+           "brought Soverion closer\l"
+           "to the surface.\p"
+           "And now…\l"
+           "One final battle to\l"
+           "complete it.$")
+}
+
+text Text_Vance_Final {
+    format("VANCE KAEL: I AM the\l"
+           "Eternal Champion.\l"
+           "I've never lost. Not once.\p"
+           "Because I hold Soverion's\l"
+           "power within me.\p"
+           "Defeat me, and the seal\l"
+           "completes. The Sovereign\l"
+           "wakes. There is no winning\l"
+           "move, {PLAYER}.\p"
+           "Fight me anyway!$")
+}
+
+text Text_Vance_Lose {
+    format("VANCE KAEL: No…\l"
+           "IMPOSSIBLE!\p"
+           "The seal — it's resonating\l"
+           "with YOUR energy instead!\p"
+           "What are you?!$")
+}
+
+text Text_Vance_PostWin {
+    format("VANCE KAEL: The seal…\l"
+           "it's reacting to you.\p"
+           "This was never supposed\l"
+           "to happen.\p"
+           "Soverion is rising.\l"
+           "But it's rising for YOU…$")
+}
+
+text Text_Vance_NotReady {
+    format("VANCE KAEL: You lack the\l"
+           "power to challenge me.\l"
+           "Earn all nine medals first.$")
+}
+
+text Text_Vance_Rematch {
+    format("VANCE KAEL: Your victory\l"
+           "was real. I accept it.\l"
+           "Battle me once more.$")
+}
+
+
+# =========================================================
+# SOVERION LEGENDARY ENCOUNTER (Post Final Boss)
+# =========================================================
+script Script_SoverionAwakens {
+    lockall
+    playbgm MUS_SOVERION_AWAKENING
+    # Screen shakes, Grand Arena floods with gold light
+    screenshake 60
+    delay 30
+    fadescreen FADE_TO_WHITE
+    delay 60
+    fadescreen FADE_FROM_WHITE
+    msgbox Text_Soverion_Rises,     MSGBOX_DEFAULT
+    msgbox Text_Opal_RadiosIn,      MSGBOX_DEFAULT
+    msgbox Text_Soverion_Speaks,    MSGBOX_DEFAULT
+    msgbox Text_Player_Decides,     MSGBOX_DEFAULT
+    # Legendary encounter
+    setvar VAR_SOVERION_STAGE, 1
+    setwildbattle SPECIES_SOVERION, 80, ITEM_NONE
+    dowildbattle
+    compare VAR_RESULT, 1   /* was Pokemon caught? */
+    if EQ, goto SoverionCaught
+    goto SoverionFled
+    end
+}
+
+script SoverionCaught {
+    msgbox Text_Soverion_Caught,    MSGBOX_DEFAULT
+    msgbox Text_Epilogue,           MSGBOX_DEFAULT
+    setvar VAR_STORY_STAGE, STAGE_COMPLETE
+    playse SE_FIREWORKS
+    call Script_CreditsRoll
+    end
+}
+
+script SoverionFled {
+    msgbox Text_Soverion_Fled,      MSGBOX_DEFAULT
+    msgbox Text_Opal_Fled,          MSGBOX_DEFAULT
+    # Soverion can be encountered again at the Grand Seal post-game
+    setflag FLAG_SOVERION_ROAMING
+    end
+}
+
+text Text_Soverion_Rises {
+    format("The Grand Arena trembles.\p"
+           "From the ancient seal,\l"
+           "a blinding gold light\l"
+           "erupts upward.\p"
+           "Something immense stirs\l"
+           "in the light.\p"
+           "SOVERION has awakened!$")
+}
+
+text Text_Opal_RadiosIn {
+    format("PROF. OPAL (radio):\l"
+           "{PLAYER}! The seal has\l"
+           "inverted — it chose YOU\l"
+           "as its Champion.\p"
+           "Soverion doesn't want\l"
+           "to destroy. It wants\l"
+           "to be understood.\p"
+           "Battle it! Reach it!\l"
+           "Prove you're worthy!$")
+}
+
+text Text_Soverion_Speaks {
+    format("The air fills with a\l"
+           "sound like all the world's\l"
+           "oceans crashing at once.\p"
+           "You feel a thought that\l"
+           "isn't yours:\p"
+           "«…Champion. At last.\l"
+           "I have waited so long\l"
+           "for one truly worthy.\l"
+           "Show me.»$")
+}
+
+text Text_Player_Decides {
+    format("{PLAYER} readied their\l"
+           "Poké Ball…\p"
+           "One way or another,\l"
+           "this ends here.$")
+}
+
+text Text_Soverion_Caught {
+    format("The golden light dims.\p"
+           "Soverion regards you\l"
+           "from inside its Poké Ball,\l"
+           "then goes still.\p"
+           "For the first time in\l"
+           "ten thousand years,\l"
+           "the Eternal Sovereign\l"
+           "has chosen a partner.$")
+}
+
+text Text_Epilogue {
+    format("Weeks later…\p"
+           "The Nexum Archipelago\l"
+           "holds its first-ever\l"
+           "closing ceremony.\p"
+           "Nine Champions stand\l"
+           "together — beaten but\l"
+           "not broken.\p"
+           "And at the center:\l"
+           "YOU.\p"
+           "The World's First True\l"
+           "Champion.$")
+}
+
+text Text_Soverion_Fled {
+    format("Soverion gazes at you\l"
+           "for one long moment.\p"
+           "Then it ascends into\l"
+           "the sky and vanishes.\p"
+           "Prof. Opal believes\l"
+           "it still roams Nexum.\l"
+           "Perhaps it will return\l"
+           "when the time is right.$")
+}
+
+text Text_Opal_Fled {
+    format("PROF. OPAL (radio):\l"
+           "Don't worry, {PLAYER}.\p"
+           "The seal is broken either\l"
+           "way. Soverion is free.\p"
+           "Search the islands.\l"
+           "It will find you again\l"
+           "when you're both ready.$")
+}

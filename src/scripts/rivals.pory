@@ -1,0 +1,381 @@
+/*
+ * Pokemon Champions: Emerald Edition
+ * Rival Scripts — Poryscript format
+ *
+ * Three rival Wild Card trainers with full story arcs:
+ *   KIRA  — Aggressive, Hoenn-themed, dark backstory
+ *   MILO  — Laid-back Alolan, becomes genuine ally
+ *   SERENA — Kalos-style strategist, secret connection to Vance
+ */
+
+# =========================================================
+# KIRA — First Rival Encounter (Nexum Harbor)
+# =========================================================
+script Kira_FirstMeeting {
+    lock
+    faceplayer
+    compare VAR_KIRA_STAGE, 0
+    if GT, goto Kira_AlreadyMet
+    msgbox Text_Kira_Intro,     MSGBOX_DEFAULT
+    msgbox Text_Kira_Challenge, MSGBOX_DEFAULT
+    trainerbattle TRAINER_RIVAL_KIRA_1, Text_Kira_Challenge, Text_Kira_Lose_1
+    msgbox Text_Kira_PostWin_1, MSGBOX_DEFAULT
+    setvar VAR_KIRA_STAGE, 1
+    end
+
+    Kira_AlreadyMet:
+    msgbox Text_Kira_Later, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Kira_Intro {
+    format("KIRA: Another Wild Card.\l"
+           "Great. More competition\l"
+           "I have to deal with.\p"
+           "Name's Kira. Remember it,\l"
+           "because I'll be the one\l"
+           "holding the World Title.$")
+}
+
+text Text_Kira_Challenge {
+    format("KIRA: You're {PLAYER}?\l"
+           "The one Prof. Opal\l"
+           "keeps fussing over?\p"
+           "Prove you belong here.\l"
+           "Battle me. Right now.$")
+}
+
+text Text_Kira_Lose_1 {
+    format("KIRA: …Fine. You're\l"
+           "not useless.$")
+}
+
+text Text_Kira_PostWin_1 {
+    format("KIRA: You're stronger\l"
+           "than I expected.\p"
+           "Don't think this changes\l"
+           "anything. I'll be watching\l"
+           "you, {PLAYER}.$")
+}
+
+text Text_Kira_Later {
+    format("KIRA: Not now. I need\l"
+           "to focus.$")
+}
+
+# Kira - Post Cynthia scene (story beat)
+script Kira_AfterCynthia {
+    lock
+    compare VAR_KIRA_STAGE, 2
+    if EQ, goto Kira_AlreadyTalked
+    compare VAR_CYNTHIA_DEFEATED, 1
+    if LT, goto Kira_NotYet
+    faceplayer
+    msgbox Text_Kira_Softer,    MSGBOX_DEFAULT
+    msgbox Text_Kira_Backstory, MSGBOX_DEFAULT
+    setvar VAR_KIRA_STAGE, 2
+    end
+
+    Kira_AlreadyTalked:
+    msgbox Text_Kira_Later, MSGBOX_SIGN
+    release
+    end
+
+    Kira_NotYet:
+    msgbox Text_Kira_Watching, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Kira_Softer {
+    format("KIRA: You beat Cynthia.\p"
+           "I didn't think anyone\l"
+           "could do that.\p"
+           "…I couldn't.$")
+}
+
+text Text_Kira_Backstory {
+    format("KIRA: My older sister\l"
+           "trained under Steven Stone\l"
+           "in Hoenn. She came to\l"
+           "Nexum three years ago.\p"
+           "She never came back.\p"
+           "I'm here to find out\l"
+           "what happened to her.\p"
+           "This tournament — there's\l"
+           "something wrong with it.\l"
+           "Stay sharp, {PLAYER}.$")
+}
+
+text Text_Kira_Watching {
+    format("KIRA: Keep pushing forward.$")
+}
+
+# Kira - Final Battle (Act III)
+script Kira_FinalBattle {
+    lock
+    faceplayer
+    compare VAR_KIRA_STAGE, 3
+    if GE, goto Kira_FinalAlready
+    msgbox Text_Kira_Final_Pre,  MSGBOX_DEFAULT
+    trainerbattle TRAINER_RIVAL_KIRA_FINAL, Text_Kira_Final_Pre, Text_Kira_Final_Lose
+    msgbox Text_Kira_Final_Win,  MSGBOX_DEFAULT
+    setvar VAR_KIRA_STAGE, 3
+    # Kira joins player's side
+    setflag FLAG_KIRA_ALLY
+    end
+
+    Kira_FinalAlready:
+    msgbox Text_Kira_Ally_Post, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Kira_Final_Pre {
+    format("KIRA: I know what Vance\l"
+           "did to my sister now.\p"
+           "She tried to expose him.\l"
+           "He used the seal's energy\l"
+           "to suppress her memory.\p"
+           "I'm so angry I can barely\l"
+           "see straight.\p"
+           "Battle me, {PLAYER}.\l"
+           "I need to get this\l"
+           "out of my system.\p"
+           "And then…\l"
+           "then we take him down\l"
+           "together.$")
+}
+
+text Text_Kira_Final_Lose {
+    format("KIRA: Ha. Yeah. Okay.\l"
+           "I'm good now.$")
+}
+
+text Text_Kira_Final_Win {
+    format("KIRA: Together then.\l"
+           "For my sister.\l"
+           "And for everyone else\l"
+           "Vance used.\p"
+           "Let's end this.$")
+}
+
+text Text_Kira_Ally_Post {
+    format("KIRA: The Grand Arena\l"
+           "is straight ahead.\l"
+           "I'll be right behind you.$")
+}
+
+
+# =========================================================
+# MILO — Second Rival
+# =========================================================
+script Milo_FirstMeeting {
+    lock
+    faceplayer
+    compare VAR_MILO_STAGE, 0
+    if GT, goto Milo_AlreadyMet
+    msgbox Text_Milo_Intro,     MSGBOX_DEFAULT
+    trainerbattle TRAINER_RIVAL_MILO_1, Text_Milo_Intro, Text_Milo_Lose_1
+    msgbox Text_Milo_PostWin_1, MSGBOX_DEFAULT
+    setvar VAR_MILO_STAGE, 1
+    end
+
+    Milo_AlreadyMet:
+    msgbox Text_Milo_Later, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Milo_Intro {
+    format("MILO: Heyyy, you must be\l"
+           "{PLAYER}! I'm Milo.\l"
+           "Wild Card, same as you.\p"
+           "My grandpa said if I ever\l"
+           "meet someone worth battling\l"
+           "I'd know. And I know.\p"
+           "Let's gooo!$")
+}
+
+text Text_Milo_Lose_1 {
+    format("MILO: Wooah! Okay okay!\l"
+           "You're the real deal!$")
+}
+
+text Text_Milo_PostWin_1 {
+    format("MILO: That was SO good!\l"
+           "You gotta tell me your\l"
+           "training secret later.\p"
+           "I'm gonna find you again\l"
+           "at Sol Isle. Don't lose\l"
+           "before then, yeah?$")
+}
+
+text Text_Milo_Later {
+    format("MILO: Catch you at the\l"
+           "next island!$")
+}
+
+# Milo - Final Battle (Act III, Sol Isle)
+script Milo_FinalBattle {
+    lock
+    faceplayer
+    compare VAR_MILO_STAGE, 3
+    if GE, goto Milo_FinalAlready
+    msgbox Text_Milo_Final_Pre,  MSGBOX_DEFAULT
+    trainerbattle TRAINER_RIVAL_MILO_FINAL, Text_Milo_Final_Pre, Text_Milo_Final_Lose
+    msgbox Text_Milo_Final_Win,  MSGBOX_DEFAULT
+    setvar VAR_MILO_STAGE, 3
+    setflag FLAG_MILO_ALLY
+    end
+
+    Milo_FinalAlready:
+    msgbox Text_Milo_Ally_Post, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Milo_Final_Pre {
+    format("MILO: I've been thinking\l"
+           "about what Cynthia said.\p"
+           "About the seal.\l"
+           "About Vance.\p"
+           "I came here for fun, yeah.\l"
+           "But this is bigger than fun.\p"
+           "Battle me one more time,\l"
+           "{PLAYER}. At full strength.\l"
+           "Then we go stop that guy.$")
+}
+
+text Text_Milo_Final_Lose {
+    format("MILO: Beautiful. Just\l"
+           "beautiful. Let's go!$")
+}
+
+text Text_Milo_Final_Win {
+    format("MILO: I'm with you to\l"
+           "the end, {PLAYER}.\l"
+           "No matter what's waiting\l"
+           "in that Grand Arena.$")
+}
+
+text Text_Milo_Ally_Post {
+    format("MILO: Stay strong!\l"
+           "We're right behind you!$")
+}
+
+
+# =========================================================
+# SERENA — Third Rival (Secret Arc)
+# =========================================================
+script Serena_FirstMeeting {
+    lock
+    faceplayer
+    compare VAR_SERENA_STAGE, 0
+    if GT, goto Serena_AlreadyMet
+    msgbox Text_Serena_Intro,     MSGBOX_DEFAULT
+    trainerbattle TRAINER_RIVAL_SERENA_1, Text_Serena_Intro, Text_Serena_Lose_1
+    msgbox Text_Serena_PostWin_1, MSGBOX_DEFAULT
+    setvar VAR_SERENA_STAGE, 1
+    end
+
+    Serena_AlreadyMet:
+    msgbox Text_Serena_Later, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Serena_Intro {
+    format("SERENA: A Wild Card\l"
+           "contestant?\p"
+           "I've analyzed every trainer\l"
+           "registered for this event.\l"
+           "You aren't in my data.\p"
+           "That makes you…\l"
+           "unpredictable.\p"
+           "I dislike unpredictable.\l"
+           "Let's correct that.$")
+}
+
+text Text_Serena_Lose_1 {
+    format("SERENA: …Interesting.\l"
+           "Very interesting.$")
+}
+
+text Text_Serena_PostWin_1 {
+    format("SERENA: You fight on\l"
+           "instinct rather than\l"
+           "calculation.\p"
+           "I'll need to update\l"
+           "my models.\p"
+           "We'll meet again, {PLAYER}.$")
+}
+
+text Text_Serena_Later {
+    format("SERENA: I'm still\l"
+           "processing our last\l"
+           "encounter.$")
+}
+
+# Serena - Reveal Scene (Act III - she's Vance's daughter)
+script Serena_TruthRevealed {
+    lock
+    faceplayer
+    compare VAR_SERENA_STAGE, 4
+    if GE, goto Serena_AlreadyKnows
+    msgbox Text_Serena_Confession, MSGBOX_DEFAULT
+    msgbox Text_Serena_Chooses,    MSGBOX_DEFAULT
+    trainerbattle TRAINER_RIVAL_SERENA_FINAL, Text_Serena_Chooses, Text_Serena_Final_Lose
+    msgbox Text_Serena_Final_Win,  MSGBOX_DEFAULT
+    setvar VAR_SERENA_STAGE, 4
+    setflag FLAG_SERENA_ALLY
+    end
+
+    Serena_AlreadyKnows:
+    msgbox Text_Serena_Ally_Post, MSGBOX_SIGN
+    release
+    end
+}
+
+text Text_Serena_Confession {
+    format("SERENA: I owe you an\l"
+           "explanation, {PLAYER}.\p"
+           "Vance Kael is my father.\p"
+           "I didn't know what he\l"
+           "was planning when I\l"
+           "came here.\p"
+           "I thought this was\l"
+           "just a tournament.\p"
+           "I was wrong.$")
+}
+
+text Text_Serena_Chooses {
+    format("SERENA: I've made my\l"
+           "choice. I won't be\l"
+           "his instrument.\p"
+           "But before I can stand\l"
+           "beside you against him…\l"
+           "I need to know you're\l"
+           "stronger than his Soverion.\p"
+           "Show me.$")
+}
+
+text Text_Serena_Final_Lose {
+    format("SERENA: …You really are\l"
+           "something else, {PLAYER}.$")
+}
+
+text Text_Serena_Final_Win {
+    format("SERENA: I have a lot\l"
+           "to make up for.\p"
+           "Let me help you stop him.\l"
+           "I know how the seal works.\p"
+           "Together, we have a chance.$")
+}
+
+text Text_Serena_Ally_Post {
+    format("SERENA: I mapped the\l"
+           "Grand Arena's layout.\l"
+           "I'll guide you through it.$")
+}
